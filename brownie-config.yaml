@@ -12,7 +12,7 @@ dependencies:
   # - <organizzation/repo>@<version> scaricate da GitHub
   - smartcontractkit/chainlink-brownie-contracts@0.2.1
   - smartcontractkit/chainlink@1.2.1
-  - OpenZeppelin/openzeppelin-contracts@3.4.0
+  - OpenZeppelin/openzeppelin-contracts@4.7.0
 
 compiler:
   # spiegare al compiler che @chainlink punta alla dipendenza su GitHub
@@ -20,7 +20,7 @@ compiler:
     remappings:
       - '@brownie-cl=smartcontractkit/chainlink-brownie-contracts@0.2.1'
       - '@chainlink=smartcontractkit/chainlink@1.2.1'
-      - '@openzeppelin=OpenZeppelin/openzeppelin-contracts@3.4.0'
+      - '@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.7.0'
 
 
 
