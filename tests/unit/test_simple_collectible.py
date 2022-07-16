@@ -1,6 +1,6 @@
 import pytest
-from scripts.deploy_n_create import deploy_n_create
-from brownie import network, accounts
+from scripts.simple_collectible.deploy_n_create import deploy_n_create
+from brownie import network
 from scripts.utilities import LOCAL_BLOCKCHAIN_ENVIRONMENTS, get_account
 
 
