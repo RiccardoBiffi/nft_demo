@@ -1,10 +1,10 @@
 // SPDX-License_Identifier: MIT
 
-pragma solidity 0.6.6;
+pragma solidity 0.8.7;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-contract SimpleCollectible is ERC721 {
+contract SimpleCollectible is ERC721URIStorage {
     uint256 public tokenCounter;
 
     constructor() public ERC721("Shiba", "DOG") {
