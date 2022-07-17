@@ -17,7 +17,12 @@ def test_can_create_advanced_collectible():
     account = get_account()
 
     # Act
-    ac = deploy_n_create()
+    ac, tx = deploy_n_create()
+    # call to mock's fulfillRandomWords to activate my callback
+    requestId = tx.events["RequestedRandomness"]["requestId"]
+    get_contract(MockContract.VRF_COORDINATOR).fulfillRandomWords(
+        requestId, ac.address, {"from": account}
+    )
 
     # Assert
     assert ac.ownerOf(0) == account

@@ -106,3 +106,15 @@ def get_and_fund_subscription():
         sub_id = config["subscriptions"]["chainlink"]
 
     return sub_id
+
+
+def maybe_add_contract_as_VRF_consumer(subscription_id, contract_address):
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+        # add the contract as a consumer of the chainlink subscription
+        vrf_contract = get_contract(MockContract.VRF_COORDINATOR)
+
+        vrf_contract.addConsumer.transact(
+            subscription_id,
+            contract_address,
+            {"from": get_account()},
+        )

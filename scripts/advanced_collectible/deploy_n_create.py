@@ -1,6 +1,11 @@
 import time
-from scripts.utilities import get_account, get_contract, get_and_fund_subscription
-from scripts.utilities import OPENSEA_URL, MockContract, LOCAL_BLOCKCHAIN_ENVIRONMENTS
+from scripts.utilities import (
+    get_account,
+    get_contract,
+    get_and_fund_subscription,
+    maybe_add_contract_as_VRF_consumer,
+)
+from scripts.utilities import MockContract
 from brownie import config, network
 from brownie import AdvancedCollectible
 
@@ -27,25 +32,11 @@ def deploy_n_create():
         publish_source=config["networks"][network.show_active()].get("verify", False),
     )
 
-    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
-        # add the contract as a consumer of the chainlink subscription
-        vrf.addConsumer.transact(
-            sub_id,
-            ac.address,
-            {"from": account},
-        )
+    maybe_add_contract_as_VRF_consumer(sub_id, ac.address)
 
     tx = ac.createCollectible({"from": account})
 
-    if network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
-        # call to fulfillRandomWords on the mock to activate my callback
-        requestId = tx.events["RequestedRandomness"]["requestId"]
-        vrf.fulfillRandomWords(requestId, ac.address, {"from": account})
-    else:
-        # waiting for the network callback
-        time.sleep(30)
-
-    return ac
+    return ac, tx
 
 
 def main():
