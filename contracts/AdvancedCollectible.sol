@@ -25,8 +25,9 @@ contract AdvancedCollectible is ERC721URIStorage, VRFConsumerBaseV2 {
     event RequestedCollectible(uint256 indexed requestId, address from);
     event BreedAssigned(uint256 indexed tokenId, Breed breed);
     event RequestedRandomness(uint256 requestId);
+    event FullfillRandomWordsCalled();
 
-    // Chainlink VRN properties
+    // Chainlink VRF properties
     // Request
     VRFCoordinatorV2Interface COORDINATOR;
     uint64 subscriptionId; // my subId to the chainlink service

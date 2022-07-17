@@ -97,8 +97,8 @@ def get_and_fund_subscription():
         # on local development chains, I need to create the contract, subscribe and fund it
         vrf_contract = get_contract(MockContract.VRF_COORDINATOR)
         create_receipt = vrf_contract.createSubscription()
-        sub_id = create_receipt.events["SubscriptionCreated"]["subId"]
 
+        sub_id = create_receipt.events["SubscriptionCreated"]["subId"]
         vrf_contract.fundSubscription(sub_id, LINK_FUND_AMOUNT)
 
     else:

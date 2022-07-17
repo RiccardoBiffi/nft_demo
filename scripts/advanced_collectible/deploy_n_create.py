@@ -35,11 +35,7 @@ def deploy_n_create():
             {"from": account},
         )
 
-    tx = ac.createCollectible({"from": account, "gasPrice": 10**9})
-
-    request_id = tx.events["RequestedRandomness"]["requestId"]
-    sender = tx.events["RequestedCollectible"]["from"]
-    print(f"Request {request_id} from {sender}\n")
+    tx = ac.createCollectible({"from": account})
 
     if network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         # call to fulfillRandomWords on the mock to activate my callback
@@ -48,6 +44,8 @@ def deploy_n_create():
     else:
         # waiting for the network callback
         time.sleep(30)
+
+    return ac
 
 
 def main():
