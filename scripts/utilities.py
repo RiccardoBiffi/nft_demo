@@ -6,6 +6,7 @@ from brownie import web3
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"  # contract_address/token_ID
+BREED_MAPPING = {0: "PUG", 1: "SHIBA_INU", 2: "ST_BERNARD"}
 
 
 class MockContract(Enum):
@@ -13,10 +14,14 @@ class MockContract(Enum):
     VRF_COORDINATOR = "vrf_coordinator"
 
 
-contract_to_mock = {
+CONTRACT_TO_MOCK = {
     MockContract.LINK_TOKEN: LinkToken,
     MockContract.VRF_COORDINATOR: VRFCoordinatorV2Mock,
 }
+
+
+def upload_to_IPFS():
+    pass
 
 
 def is_local_blockchain():
@@ -47,7 +52,7 @@ def get_contract(contract_enum):
         brownie.network.contract.ProjectContract : last deployed version of the contract,
         it can be a mock or a contract on a real chain.
     """
-    contract_type = contract_to_mock[contract_enum]
+    contract_type = CONTRACT_TO_MOCK[contract_enum]
 
     if is_local_blockchain():
         if len(contract_type) == 0:
@@ -118,3 +123,7 @@ def maybe_add_contract_as_VRF_consumer(subscription_id, contract_address):
             contract_address,
             {"from": get_account()},
         )
+
+
+def get_breed(breed_n):
+    return BREED_MAPPING[breed_n]
