@@ -1,7 +1,5 @@
 import time
-from scripts.utilities import get_account, get_contract, get_and_fund_subscription
-from scripts.utilities import OPENSEA_URL, MockContract, LOCAL_BLOCKCHAIN_ENVIRONMENTS
-from brownie import config, network
+from scripts.utilities import get_account
 from brownie import AdvancedCollectible
 
 
@@ -10,5 +8,5 @@ def main():
     ac = AdvancedCollectible[-1]
     ac.createCollectible({"from": account})
 
-    print("Collectible created")
+    print(f"Collectible created on contract {ac.address}")
     time.sleep(1)
