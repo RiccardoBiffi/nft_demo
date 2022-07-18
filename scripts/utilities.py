@@ -20,10 +20,6 @@ CONTRACT_TO_MOCK = {
 }
 
 
-def upload_to_IPFS():
-    pass
-
-
 def is_local_blockchain():
     return network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS
 
