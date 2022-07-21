@@ -1,5 +1,5 @@
 import pytest
-from scripts.advanced_collectible.deploy_n_create import deploy_n_create
+from scripts.advanced_collectible.deploy import deploy
 from brownie import network
 from scripts.utilities import LOCAL_BLOCKCHAIN_ENVIRONMENTS, get_account
 import time
@@ -13,7 +13,7 @@ def test_can_create_advanced_collectible_integration():
     account = get_account()
 
     # Act
-    ac, _ = deploy_n_create()
+    ac, _ = deploy()
     # waiting for the network to callback
     time.sleep(70)
 
