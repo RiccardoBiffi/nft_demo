@@ -14,7 +14,15 @@ contract AdvancedCollectible is ERC721URIStorage, VRFConsumerBaseV2 {
         ST_BERNARD
     }
 
-    mapping(uint256 => Breed) public tokenId_Breed;
+    struct Dog {
+        Breed breed;
+        uint256 base;
+        uint256 descr_exclamation;
+        uint256 cuteness;
+        uint256 bark_power;
+    }
+
+    mapping(uint256 => Dog) public tokenId_Dog;
     mapping(uint256 => address) public requestId_Sender;
 
     // Best practice: create an event for every mapping update
@@ -23,7 +31,7 @@ contract AdvancedCollectible is ERC721URIStorage, VRFConsumerBaseV2 {
     //   Useful for testing and debugging
 
     event RequestedCollectible(uint256 indexed requestId, address from);
-    event BreedAssigned(uint256 indexed tokenId, Breed breed);
+    event AttributesAssigned(uint256 indexed tokenId, Dog breed);
     event RequestedRandomness(uint256 requestId);
     event FullfillRandomWordsCalled();
 
@@ -64,6 +72,7 @@ contract AdvancedCollectible is ERC721URIStorage, VRFConsumerBaseV2 {
     }
 
     function createCollectible() public returns (bytes32) {
+        require(tokenCounter <= 9, "All Dogies have already been minted!");
         // Request a random word. I'll use it to generate the attributes of the NFT
         requestId = COORDINATOR.requestRandomWords(
             keyHash,
@@ -86,15 +95,20 @@ contract AdvancedCollectible is ERC721URIStorage, VRFConsumerBaseV2 {
     ) internal override {
         randomWord = _randomWords[0];
 
-        // Randomly obtain the breed of this new token
-        Breed breed = Breed(randomWord % 3);
-
+        // Randomly obtain the attributes of this new token
+        Dog memory dog = Dog(
+            Breed(randomWord % 3),
+            ((randomWord / 10) % 10),
+            ((randomWord / 100) % 10),
+            ((randomWord / 1000) % 10) + 1,
+            ((randomWord / 10000) % 100) + 1
+        );
         // I create a new token ID and update the counter
         uint256 newTokenId = tokenCounter;
 
         // I need to assign the breed to the tokenID, I'll map them
-        tokenId_Breed[newTokenId] = breed;
-        emit BreedAssigned(newTokenId, breed);
+        tokenId_Dog[newTokenId] = dog;
+        emit AttributesAssigned(newTokenId, dog);
 
         // I cannot mint with msg.sender because it's chainlink who called this method
         // Otherwise I'd assign the NFT to them! _msgSender() solve this

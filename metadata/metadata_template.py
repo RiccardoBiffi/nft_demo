@@ -3,7 +3,8 @@ metadata_template = {
     "description": "",
     "image": "",
     "attributes": [
-        {"trait_type": "cuteness", "value": 100},
-        {"trait_type": "bark_power", "value": 73},
+        {"trait_type": "Base", "value": ""},
+        {"trait_type": "Cuteness", "value": 0},
+        {"display_type": "boost_percentage", "trait_type": "Bark Power Up", "value": 0},
     ],
 }
