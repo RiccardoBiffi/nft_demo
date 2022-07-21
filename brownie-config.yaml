@@ -21,7 +21,7 @@ dependencies:
   - OpenZeppelin/openzeppelin-contracts@4.7.0
 
 compiler:
-  # spiegare al compiler che @chainlink punta alla dipendenza su GitHub
+  # instruct the compiler that @chainlink points to GitHub
   solc:
     remappings:
       - '@brownie-cl=smartcontractkit/chainlink-brownie-contracts@0.2.1'
